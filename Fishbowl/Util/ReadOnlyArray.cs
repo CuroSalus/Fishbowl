@@ -9,7 +9,7 @@ namespace Fishbowl.Util
 {
 	internal sealed class ReadOnlyArray<T> : ICloneable, IList, IStructuralComparable, IStructuralEquatable
 	{
-		public static ReadOnlyArray<TType> CreateByArrayReference<TType>(TType[] target)
+		public static ReadOnlyArray<TType> WrapArray<TType>(TType[] target)
 			=> new() { InternalArray = target };
 
 		private T[] InternalArray { get; init; }

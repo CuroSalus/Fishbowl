@@ -15,17 +15,19 @@ namespace Fishbowl
 	{
 		public static int Main(string[] _)
 		{
-			Simulation.Rules.ShowSimulationTime = true;
+			Simulation.Rules.ShowCycleTime = true;
 			Simulation.Simulate(1);
 
 #if DEBUG
 			Console.ReadKey();
 			Console.Clear();
 
+			Console.WriteLine("DEBUG SCREEN:");
+
 			ConsoleUtility.WritePermutation(Simulation.Blackboard.GetItem<PerlinGenerator>(PerlinGenerator.BLACKBOARD_PERLIN_REFERENCE)!.GetPermutation().ToArray());
 
-			Console.WriteLine($"Startup time: {Simulation.Diagnostics.StartUpMilliseconds} ms");
-			Console.WriteLine($"Shutdown time: {Simulation.Diagnostics.ShutDownMilliseconds} ms");
+			Console.WriteLine($"Startup time: {Simulation.Diagnostics.StartupTicks} ticks");
+			Console.WriteLine($"Shutdown time: {Simulation.Diagnostics.ShutdownTicks} ticks");
 #endif
 
 			return 0;

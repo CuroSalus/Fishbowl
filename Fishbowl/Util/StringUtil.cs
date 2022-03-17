@@ -8,12 +8,5 @@ namespace Fishbowl.Util
 {
 	internal static class StringUtil
 	{
-		public static bool TryGetIntern(string str, out string? interned)
-		{
-			interned = string.IsInterned(str);
-
-			return interned is not null;
-		}
-
 	}
 }

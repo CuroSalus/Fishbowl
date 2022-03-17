@@ -11,20 +11,20 @@ namespace Fishbowl.Core
 	{
 		public static class Diagnostics
 		{
-			private static Stopwatch Watch = new Stopwatch();
+			private static Stopwatch Watch = new();
 			private static long StartUpStartTicks = 0;
 			private static long StartUpEndTicks = 0;
-			private static long ShutDownStartTicks = 0;
-			private static long ShutDownEndTicks = 0;
-			private static long LoopStartTicks = 0;
-			private static long LoopStopTicks = 0;
+			private static long ShutdownStartTicks = 0;
+			private static long ShutdownEndTicks = 0;
+			private static long CycleStartTicks = 0;
+			private static long CycleStopTicks = 0;
 			
 			public static long ElapsedTicks => Watch.ElapsedTicks;
-			public static long StartUpMilliseconds { get; private set; } = 0;
-			public static long ShutDownMilliseconds { get; private set; } = 0;
-			public static long LastLoopMilliseconds => (long)(LastLoopTicks * SystemDiscovery.MillisecondsTickScalar);
-			public static long LastLoopMicroseconds => (long)(LastLoopTicks * SystemDiscovery.MicrosecondsTickScalar);
-			public static long LastLoopTicks { get; private set; } = 0;
+			public static long StartupTicks { get; private set; } = 0;
+			public static long ShutdownTicks { get; private set; } = 0;
+			public static long LastCycleMilliseconds => (long)(LastCycleTicks * SystemDiscovery.MillisecondsTickScalar);
+			public static long LastCycleMicroseconds => (long)(LastCycleTicks * SystemDiscovery.MicrosecondsTickScalar);
+			public static long LastCycleTicks { get; private set; } = 0;
 
 			public static void StartWatch()
 			{
@@ -32,16 +32,16 @@ namespace Fishbowl.Core
 			}
 
 
-			public static void StartLoopTimer()
+			public static void StartCycleTimer()
 			{
-				LoopStartTicks = Watch.ElapsedTicks;
+				CycleStartTicks = Watch.ElapsedTicks;
 			}
 
-			public static void StopLoopTimer()
+			public static void StopCycleTimer()
 			{
-				LoopStopTicks = Watch.ElapsedTicks;
+				CycleStopTicks = Watch.ElapsedTicks;
 
-				LastLoopTicks = LoopStopTicks - LoopStartTicks;
+				LastCycleTicks = CycleStopTicks - CycleStartTicks;
 			}
 
 			public static void StartStartUpTimer()
@@ -53,19 +53,19 @@ namespace Fishbowl.Core
 			{
 				StartUpEndTicks = Watch.ElapsedTicks;
 
-				StartUpMilliseconds = (long)((StartUpEndTicks - StartUpStartTicks) * SystemDiscovery.MillisecondsTickScalar);
+				StartupTicks = StartUpEndTicks - StartUpStartTicks;
 			}
 
 			public static void StartShutDownTimer()
 			{
-				ShutDownStartTicks = Watch.ElapsedTicks;
+				ShutdownStartTicks = Watch.ElapsedTicks;
 			}
 
 			public static void EndShutDownTimer()
 			{
-				ShutDownEndTicks = Watch.ElapsedTicks;
+				ShutdownEndTicks = Watch.ElapsedTicks;
 
-				ShutDownMilliseconds = (long)((ShutDownEndTicks - ShutDownStartTicks) * SystemDiscovery.MillisecondsTickScalar);
+				ShutdownTicks = ShutdownEndTicks - ShutdownStartTicks;
 			}
 		}
 	}

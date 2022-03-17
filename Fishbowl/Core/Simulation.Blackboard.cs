@@ -11,11 +11,39 @@ namespace Fishbowl.Core
 	{
 		public static class Blackboard
 		{
+			public const int MESSAGES_LIMIT = 100;
+
+
 			private static readonly Dictionary<string, object?> Map;
+			private static readonly Message[] _Messages;
+			private static byte MessagesPointer = 0;
+			public static int MessageCount { get => MessagesPointer; }
+			public static readonly ReadOnlyArray<Message> Messages;
 
 			static Blackboard()
 			{
 				Map = new Dictionary<string, object?>();
+				_Messages = new Message[MESSAGES_LIMIT];
+				Messages = ReadOnlyArray<Message>.WrapArray(_Messages);
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="message"></param>
+			public static void QueueMessage(Message message)
+			{
+				if (MessagesPointer == MESSAGES_LIMIT)
+				{
+					throw new InvalidOperationException("Message queue full!");
+				}
+
+				_Messages[MessagesPointer++] = message;
+			}
+
+			public static ReadOnlyArray<Message> GetMessages()
+			{
+				return ReadOnlyArray<Message>.WrapArray(_Messages);
 			}
 
 			public static void AddItem(string key, object obj) => Map.Add(string.Intern(key), obj);

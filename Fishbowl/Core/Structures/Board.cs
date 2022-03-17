@@ -1,5 +1,4 @@
-﻿using Fishbowl.Util;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,8 +7,9 @@ using System.Threading.Tasks;
 
 using Fishbowl.Core;
 using Fishbowl.Core.Noise;
+using Fishbowl.Util;
 
-namespace Fishbowl.Structures
+namespace Fishbowl
 {
 	public enum TerrainTypes : int
 	{
@@ -26,14 +26,14 @@ namespace Fishbowl.Structures
 		public readonly int YWidth;
 
 		public readonly int[,] Terrain;
-		public readonly int[,] Actors;
+		public readonly int[,] Entities;
 
 		public Board(int x = 30, int y = 30)
 		{
 			XWidth = x;
 			YWidth = y;
 			Terrain = new int[x, y];
-			Actors = new int[x, y];
+			Entities = new int[x, y];
 		}
 
 		public void FillRandomTerrain()

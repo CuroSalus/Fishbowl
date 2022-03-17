@@ -10,7 +10,10 @@ namespace Fishbowl.Core
 	{
 		public static class Rules
 		{
-			public static bool ShowSimulationTime = false;
+			/// <summary>Display the engine's last Cycle time.</summary>
+			public static bool ShowCycleTime = false;
+			/// <summary>Clear the console at Cycle start.</summary>
+			public static bool ClearConsoleAtCycleStart = true;
 		}
 	}
 }
