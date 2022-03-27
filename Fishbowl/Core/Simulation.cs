@@ -53,7 +53,7 @@ namespace Fishbowl.Core
 
 			if (Rules.ShowCycleTime)
 			{
-				Console.WriteLine($"Loop runtime: {Diagnostics.LastCycleMilliseconds} ms");
+				Console.WriteLine($"Loop runtime: {Diagnostics.LastCycleMicroseconds} {StringUtil.Symbols.LOWERCASE_MU}s");
 			}
 		}
 
@@ -87,15 +87,19 @@ namespace Fishbowl.Core
 
 				// Handle input.
 
+
 				// Simulate world.
+				World.Simluate();
 
 
 				// Process Messages.
-				ReadOnlyArray<Message> messages = Blackboard.GetMessages();
+				ReadOnlyArray<Message> messages = Blackboard.Messages;
 				for (int i = 0; i < Blackboard.MessageCount; i++)
 				{
 					// Process Messages.
 				}
+				Blackboard.ClearMessages();
+				
 
 				// Simulate Scene.
 

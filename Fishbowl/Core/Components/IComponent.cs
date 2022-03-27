@@ -10,13 +10,5 @@ namespace Fishbowl
 	internal interface IComponent
 	{
 		public string Name { get; init; }
-
-//		protected IComponent(string name)
-//		{
-//#if DEBUG || INVARIANT
-//			Invariant.Assert(string.IsInterned(name) is not null, $"Component names must be interned.");
-//#endif
-//			Name = name;
-//		}
 	}
 }

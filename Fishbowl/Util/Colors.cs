@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fishbowl.Core.Structures;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Fishbowl.Util
 {
 	internal class Colors
 	{
-		public static Color SavedBackground { get; private set; }
-		public static Color SavedForeground { get; private set; }
+		public static DisplayColor SavedBackground { get; private set; }
+		public static DisplayColor SavedForeground { get; private set; }
 
-		public static Color CurrentBackground { get; private set; }
-		public static Color CurrentForeground { get; private set; }
+		public static DisplayColor CurrentBackground { get; private set; }
+		public static DisplayColor CurrentForeground { get; private set; }
 
 		public static void SaveCurrentColors()
 		{
@@ -25,6 +26,16 @@ namespace Fishbowl.Util
 		{
 			CurrentBackground = SavedBackground;
 			CurrentForeground = SavedForeground;
+		}
+
+		public static void StartSavedColors()
+		{
+			Console.Write(Ansi.StartAllColor(SavedBackground, SavedForeground));
+		}
+
+		public static void StartCurrentColors()
+		{
+			Console.Write(Ansi.StartAllColor(CurrentBackground, CurrentForeground));
 		}
 	}
 }

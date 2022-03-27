@@ -7,19 +7,28 @@ using System.Threading.Tasks;
 
 namespace Fishbowl.Core.Structures
 {
-	[StructLayout(LayoutKind.Explicit, Size = 4)]
-	internal struct DisplayColor
+	internal readonly struct DisplayColor
 	{
-		[FieldOffset(0)]
-		public int ARGB;
+		/// <summary>Red Value (0, 255)</summary>
+		public readonly byte R;
+		/// <summary>Green Value (0, 255)</summary>
+		public readonly byte G;
+		/// <summary>Blue Value (0, 255)</summary>
+		public readonly byte B;
 
-		[FieldOffset(0)]
-		public byte A;
-		[FieldOffset(1)]
-		public byte R;
-		[FieldOffset(2)]
-		public byte G;
-		[FieldOffset(3)]
-		public byte B;
+		public DisplayColor(byte r, byte g, byte b)
+		{
+			R = r;
+			G = g;
+			B = b;
+		}
+
+		#region Constants
+		public static readonly DisplayColor Black = new(0, 0, 0);
+		public static readonly DisplayColor White = new(255, 255, 255);
+		public static readonly DisplayColor Red = new(255, 0, 0);
+		public static readonly DisplayColor Green = new(0, 255, 0);
+		public static readonly DisplayColor Blue = new(0, 0, 255);
+		#endregion
 	}
 }

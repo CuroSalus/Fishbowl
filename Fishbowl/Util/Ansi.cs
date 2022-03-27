@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fishbowl.Core.Structures;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,8 +11,9 @@ namespace Fishbowl.Util
 {
 	internal static class Ansi
 	{
-		public const char ESC = '\u001b';
-		public static readonly string ResetEffects = $"{ESC}[0m";
+		public const char ESC_CHAR = '\u001b';
+		public const string Start = $"\u001b[";
+		public static readonly string ResetEffects = $"{Start}0m";
 
 		internal static class FontEffects
 		{
@@ -23,7 +25,7 @@ namespace Fishbowl.Util
 
 		public static string StartForegroundColor(byte r, byte g, byte b)
 		{
-			return $"{ESC}[38;2;{r};{g};{b}m";
+			return $"{Start}38;2;{r};{g};{b}m";
 		}
 
 		public static string StartForegroundColor(Color color)
@@ -33,7 +35,7 @@ namespace Fishbowl.Util
 
 		public static string StartBackgroundColor(byte r, byte g, byte b)
 		{
-			return $"{ESC}[48;2;{r};{g};{b}m";
+			return $"{Start}48;2;{r};{g};{b}m";
 		}
 
 		public static string StartBackgroundColor(Color color)
@@ -53,12 +55,17 @@ namespace Fishbowl.Util
 
 		public static string StartAllColor(byte br, byte bg, byte bb, byte fr, byte fg, byte fb)
 		{
-			return $"{ESC}[38;{fr};{fg};{fb};48;{br};{bg};{bb}m";
+			return $"{Start}38;{fr};{fg};{fb};48;{br};{bg};{bb}m";
+		}
+
+		public static string StartAllColor(DisplayColor background, DisplayColor foreground)
+		{
+			return StartAllColor(background.R, background.G, background.B, foreground.R, foreground.G, foreground.B);
 		}
 
 		public static string CustomAnsiControl(string control)
 		{
-			return $"{ESC}[{control}m";
+			return $"{Start}{control}m";
 		}
 
 		#region WINANSI

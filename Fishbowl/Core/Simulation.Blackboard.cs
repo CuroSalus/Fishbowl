@@ -41,9 +41,13 @@ namespace Fishbowl.Core
 				_Messages[MessagesPointer++] = message;
 			}
 
-			public static ReadOnlyArray<Message> GetMessages()
+			public static void ClearMessages()
 			{
-				return ReadOnlyArray<Message>.WrapArray(_Messages);
+				while (MessagesPointer > 0)
+				{
+					_Messages[MessagesPointer--] = Message.EmptyMessage();
+				}
+				_Messages[0] = Message.EmptyMessage();
 			}
 
 			public static void AddItem(string key, object obj) => Map.Add(string.Intern(key), obj);
