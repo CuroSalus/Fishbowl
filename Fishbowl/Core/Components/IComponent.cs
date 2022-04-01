@@ -9,6 +9,6 @@ namespace Fishbowl
 	/// <summary>Represents the base Component for the Component/Composite pattern.</summary>
 	internal interface IComponent
 	{
-		public string Name { get; init; }
+		public string ComponentName { get; init; }
 	}
 }

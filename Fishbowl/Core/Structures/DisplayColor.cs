@@ -23,9 +23,16 @@ namespace Fishbowl.Core.Structures
 			B = b;
 		}
 
+		#region Static
+		public static string GetPrettyString(DisplayColor color) {
+			return $"DisplayColor({color.R}, {color.G}, {color.B})";
+		}
+		#endregion
+
 		#region Constants
 		public static readonly DisplayColor Black = new(0, 0, 0);
 		public static readonly DisplayColor White = new(255, 255, 255);
+		
 		public static readonly DisplayColor Red = new(255, 0, 0);
 		public static readonly DisplayColor Green = new(0, 255, 0);
 		public static readonly DisplayColor Blue = new(0, 0, 255);

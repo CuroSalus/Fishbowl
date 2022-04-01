@@ -79,7 +79,7 @@ namespace Fishbowl.Core
 
 		public virtual void SetComponent(IComponent component)
 		{
-			Components[component.Name] = component;
+			Components[component.ComponentName] = component;
 		}
 
 		public virtual void RemoveComponent(string componentId)

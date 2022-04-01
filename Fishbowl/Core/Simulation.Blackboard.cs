@@ -9,7 +9,7 @@ namespace Fishbowl.Core
 {
 	internal static partial class Simulation
 	{
-		public static class Blackboard
+		public static partial class Blackboard
 		{
 			public const int MESSAGES_LIMIT = 100;
 
@@ -22,7 +22,7 @@ namespace Fishbowl.Core
 
 			static Blackboard()
 			{
-				Map = new Dictionary<string, object?>();
+				Map = new Dictionary<string, object?>(StringReferenceComparer.Instance);
 				_Messages = new Message[MESSAGES_LIMIT];
 				Messages = ReadOnlyArray<Message>.WrapArray(_Messages);
 			}

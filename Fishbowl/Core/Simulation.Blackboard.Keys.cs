@@ -8,11 +8,10 @@ namespace Fishbowl.Core
 {
 	internal static partial class Simulation
 	{
-		public static class World
+		public static partial class Blackboard
 		{
-			public static void Simulate()
+			public static class Keys
 			{
-
 			}
 		}
 	}

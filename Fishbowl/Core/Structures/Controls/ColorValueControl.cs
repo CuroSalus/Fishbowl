@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Fishbowl.Core.Structures.Controls
 {
-	internal class ColorValueControl : EngineObject, IControl, IDisplayComponent
+	internal class ColorValueControl : EngineObject, IControl, IDisplayComponent, IControlLeaf
 	{
 		public enum Color
 		{
@@ -16,34 +16,46 @@ namespace Fishbowl.Core.Structures.Controls
 			Green
 		}
 
+		public const string LABEL_NAME = "LABEL";
+		public const string VALUE_NAME = "VALUE";
+
+		private readonly TextControl LabelControl;
+		private readonly TextControl ValueControl;
+
 		public byte Value { get; set; }
-		public string Label { get; set; }
 		public ColorValueControl.Color ControlColor { get; private set; }
 		public DisplayColor LabelForegroundColor { get; set; }
 		public DisplayColor LabelBackgroundColor { get; set; }
 
-		public string Name { get; init; }
-		public ColorValueControl(string name, ColorValueControl.Color color)
+		public string ComponentName { get; init; }
+		public ColorValueControl(string name, ColorValueControl.Color color, int xpos, int ypos)
 		{
-			Name = name;
+			ComponentName = name;
 			Enabled = true;
 			ControlColor = color;
+			XPosition = xpos;
+			YPosition = ypos;
 
 			switch (color)
 			{
 				case ColorValueControl.Color.Red:
-					Label = "Red";
+					Components[LABEL_NAME] = LabelControl = new TextControl(LABEL_NAME, xpos, ypos, "Red:") { Width = 6, Height = 1 };
+					Components[VALUE_NAME] = ValueControl = new TextControl(VALUE_NAME, xpos + 3, ypos + 1, Value, null, DisplayColor.Red) { Width = 6, Height = 1 };
 					break;
 				case ColorValueControl.Color.Green:
-					Label = "Green";
+					Components[LABEL_NAME] = LabelControl = new TextControl(LABEL_NAME, xpos, ypos, "Green:") { Width = 6, Height = 1 };
+					Components[VALUE_NAME] = ValueControl = new TextControl(VALUE_NAME, xpos + 3, ypos + 1, Value, null, DisplayColor.Green) { Width = 6, Height = 1 };
 					break;
 				case ColorValueControl.Color.Blue:
-					Label = "Blue";
+					Components[LABEL_NAME] = LabelControl = new TextControl(LABEL_NAME, xpos, ypos, "Blue:") { Width = 6, Height = 1 };
+					Components[VALUE_NAME] = ValueControl = new TextControl(VALUE_NAME, xpos + 3, ypos + 1, Value, null, DisplayColor.Blue) { Width = 6, Height = 1 };
 					break;
 				default:
-					Label = "UNDEFINED";
+					Components[LABEL_NAME] = LabelControl = new TextControl(LABEL_NAME, xpos, ypos, "UNDFND") { Width = 6, Height = 1 };
+					Components[VALUE_NAME] = ValueControl = new TextControl(VALUE_NAME, xpos + 3, ypos + 1, Value) { Width = 6, Height = 1 };
 					break;
 			}
+			
 		}
 
 		#region Interface: IDisplayComponent
@@ -53,28 +65,25 @@ namespace Fishbowl.Core.Structures.Controls
 
 		public void Draw()
 		{
-			ConsoleWriter writer = new(XPosition, YPosition);
-
-			writer.Write(Ansi.StartAllColor(DisplayColor.Black, DisplayColor.White));
-			writer.Write(Label);
-			
 			if (Enabled)
 			{
-
-				Console.SetCursorPosition(XPosition, YPosition);
-
-				if (Value > 99)
+				if (IsSelected)
 				{
-					Console.Write($" {Value}");
+					LabelControl.Foreground = DisplayColor.Black;
+					LabelControl.Background = DisplayColor.White;
+					LabelControl.Draw();
 				}
 				else
 				{
-					Console.Write(Value);
+					LabelControl.Foreground = DisplayColor.White;
+					LabelControl.Background = DisplayColor.Black;
+					LabelControl.Draw();
 				}
-
-				Colors.StartCurrentColors();
+				ValueControl.Text = Value.ToString();
+				ValueControl.Draw();
 			}
 		}
+		
 		public void RemoveChild(IDisplayComponent child) => throw new NotImplementedException();
 		public void AddChild(IDisplayComponent child) => throw new NotImplementedException();
 		#endregion
@@ -82,20 +91,27 @@ namespace Fishbowl.Core.Structures.Controls
 		#region Interace: IControl
 		public bool IsSelected { get; set; }
 
-		public void Handle(ConsoleKeyInfo? keyInfo)
+		/// <summary>
+		/// Handles key presses. Up to increment. Down to decrement.
+		/// Always returns true as it's functionally leaf element with no children.
+		/// </summary>
+		/// <param name="keyInfo"></param>
+		/// <returns></returns>
+		public bool Handle(ConsoleKeyInfo? keyInfo)
 		{
-			if (keyInfo is null) return;
+			if (keyInfo is null || !IsSelected) return true;
 
 			switch (keyInfo.Value.Key)
 			{
 				case ConsoleKey.UpArrow:
 					Value++;
-					return;
+					break;
 				case ConsoleKey.DownArrow:
-					Value++;
-					return;
+					Value--;
+					break;
 			}
-			return;
+
+			return true;
 		}
 		#endregion
 	}

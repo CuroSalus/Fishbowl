@@ -28,7 +28,7 @@ namespace Fishbowl.Util
 			return $"{Start}38;2;{r};{g};{b}m";
 		}
 
-		public static string StartForegroundColor(Color color)
+		public static string StartForegroundColor(DisplayColor color)
 		{
 			return StartForegroundColor(color.R, color.G, color.B);
 		}
@@ -38,7 +38,7 @@ namespace Fishbowl.Util
 			return $"{Start}48;2;{r};{g};{b}m";
 		}
 
-		public static string StartBackgroundColor(Color color)
+		public static string StartBackgroundColor(DisplayColor color)
 		{
 			return StartBackgroundColor(color.R, color.G, color.B);
 		}

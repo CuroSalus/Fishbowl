@@ -10,11 +10,11 @@ namespace Fishbowl.Core.Structures.Input
 	{
 		private ConsoleKeyInfo? KeyInfo;
 
-		public string Name { get; init; }
+		public string ComponentName { get; init; }
 
 		public RawInputRouter(string name)
 		{
-			Name = name;
+			ComponentName = name;
 		}
 
 		public ConsoleKeyInfo? GetInput()

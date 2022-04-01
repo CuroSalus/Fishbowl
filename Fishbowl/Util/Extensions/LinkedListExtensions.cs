@@ -19,7 +19,7 @@ namespace Fishbowl
 		/// <exception cref="ArgumentNullException">List is null.</exception>
 		public static T? PopIndex<T>(this LinkedList<T> list, int index)
 		{
-			if (list == null) throw new ArgumentNullException("LinkedList cannot be null.", nameof(list));
+			if (list == null) throw new ArgumentNullException(nameof(list), "LinkedList cannot be null.");
 			if (index < 0) throw new IndexOutOfRangeException("Index cannot be less than zero.");
 			if (index >= list.Count) throw new IndexOutOfRangeException("Index cannot be larger than the size of the linked list.");
 			if (list.Count == 0) { return default; }

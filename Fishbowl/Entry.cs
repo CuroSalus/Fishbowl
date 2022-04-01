@@ -13,10 +13,10 @@ namespace Fishbowl
 {
 	internal class Entry
 	{
-		public static int Main(string[] _)
+		public static int Main(string[] args)
 		{
 			Simulation.Rules.ShowCycleTime = true;
-			Simulation.Simulate(1);
+			Simulation.Simulate(args);
 
 #if DEBUG
 			Console.ReadKey();
